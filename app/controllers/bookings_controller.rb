@@ -1,0 +1,3 @@
+class BoonkingController < ApplicationController
+
+end

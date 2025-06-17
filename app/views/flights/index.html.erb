@@ -28,6 +28,7 @@
                 <h3> <%= flight.departure_airport.code %> to <%= flight.arrival_airport.code %> </h3>
                 <p> Departure: <%= flight.start_datetime.strftime("%d/%m/%Y %H:%M") %> </p>
                 <p> Duration : <%= flight.flight_duration %> </p>
+                <%= link_to "Select this flight" new_bookng_path(flight_id: flight.id) %>
             </div>
         <% end %>
     <% else %>
@@ -35,4 +36,3 @@
  <% end %>
 <% end %>
     
-
