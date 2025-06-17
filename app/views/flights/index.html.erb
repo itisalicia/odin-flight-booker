@@ -1,0 +1,38 @@
+<h1> Flight booker </h1>
+
+<%= form_with url: flights_path, method: 'get' do |form| %>
+    <div>
+        <%= form.label :departure_airport_id, "Select a departure airport :"%>
+        <%= form.collection_select :departure_airport_id, Airport.order(:code), :id, :code %>
+    </div> <br />
+    <div>
+        <%= form.label :arrival_airport_id, "Select an arrival airport :" %>
+        <%= form.collection_select :arrival_airport_id, Airport.order(:code), :id, :code %>
+    </div>
+    <div> <br />
+        <%= form.label :passenger_count, "Number of passengers :" %>
+        <%= form.number_field :passenger_count, in: 1..20, value: 1 %>
+    </div>
+    <div> <br />
+        <%= form.label :start_datetime, "Date of departure : " %>
+        <%= form.select :start_date, options_for_select(Flight.formatted_date_options) %>
+    </div> <br />
+    <%= form.submit "Search flights" %>
+<% end %>
+
+<h2> Available flights </h2>
+<% if params[:departure_airport_id].present? || params[:arrival_airport_id].present? %>
+    <% if @flights.any? %>
+        <% @flights.each do |flight| %>
+            <div>
+                <h3> <%= flight.departure_airport.code %> to <%= flight.arrival_airport.code %> </h3>
+                <p> Departure: <%= flight.start_datetime.strftime("%d/%m/%Y %H:%M") %> </p>
+                <p> Duration : <%= flight.flight_duration %> </p>
+            </div>
+        <% end %>
+    <% else %>
+    <p> Sorry, there are no flights available for your search. </p>
+ <% end %>
+<% end %>
+    
+
